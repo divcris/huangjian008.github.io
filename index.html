@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<title>XXX，余生有你</title>
+<title>安彤，余生有你</title>
 <style>
 html, body {
 	height: 100%;
@@ -43,8 +43,6 @@ a {
 .element {
 	width: 120px;
 	height: 160px;
-	box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
-	border: 1px solid rgba(127,255,255,0.25);
 	text-align: center;
 	cursor: default;
 }
@@ -59,33 +57,6 @@ a {
 	border: 1px solid rgba(127,255,255,0.75);
 }
 
-	.element .number {
-		position: absolute;
-		top: 20px;
-		right: 20px;
-		font-size: 12px;
-		color: rgba(127,255,255,0.75);
-	}
-
-	.element .symbol {
-		position: absolute;
-		top: 40px;
-		left: 0px;
-		right: 0px;
-		font-size: 60px;
-		font-weight: bold;
-		color: rgba(255,255,255,0.75);
-		text-shadow: 0 0 10px rgba(0,255,255,0.95);
-	}
-
-	.element .details {
-		position: absolute;
-		bottom: 15px;
-		left: 0px;
-		right: 0px;
-		font-size: 12px;
-		color: rgba(127,255,255,0.75);
-	}
 
  button {
 	background: transparent;
@@ -93,23 +64,16 @@ a {
 	padding: 0;
 	cursor: pointer;
 }
-/*button:hover {
-	background-color: rgba(0,255,255,0.5);
-}
-button:active {
-	color: #000000;
-	background-color: rgba(0,255,255,0.75);
-} */
 </style>
 </head>
 <body>
+<embed src="./imgs/yueyueT.mp3"　autostart="true"　loop="true"　hidden="true" style="position: fixed; height: 0; width: 0"/>
 <script src="js/three.min.js" ></script>
 <script src="js/tween.min.js" ></script>
 <script src="js/TrackballControls.js" ></script>
 <script src="js/CSS3DRenderer.js" ></script>
-<embed src="./imgs/yueyueT.mp3"　autostart="true"　loop="true"　hidden="true" style="position: fixed; height: 0; width: 0"/>
 <div id="container"></div>
-<div id="info">XXX，余生有你</div>
+<div id="info">安彤，余生有你</div>
 <div id="menu">
 <button id="table"></button>
 <button id="sphere"></button>
@@ -244,9 +208,12 @@ var controls;
 
 var objects = [];
 var targets = { table: [], sphere: [], helix: [], grid: [] };
+window.onload =function() {
+	init();
+	animate();
+}
 
-init();
-animate();
+
 
 function init() {
 
@@ -261,22 +228,7 @@ function init() {
 
 		var element = document.createElement( 'div' );
 		element.className = 'element';
-		element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
-
-		// var number = document.createElement( 'div' );
-		// number.className = 'number';
-		// number.textContent = (i/5) + 1;
-		// element.appendChild( number );
-
-		// var symbol = document.createElement( 'div' );
-		// symbol.className = 'symbol';
-		// symbol.textContent = table[ i ];
-		// element.appendChild( symbol );
-
-		// var details = document.createElement( 'div' );
-		// details.className = 'details';
-		// details.innerHTML = table[ i + 1 ] + '<br>' + table[ i + 2 ];
-		// element.appendChild( details );
+		// element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
 		var img = document.createElement( 'img' );
 		img.className = 'img';
 		img.src = './imgs/first.png';
