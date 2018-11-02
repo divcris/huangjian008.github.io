@@ -428,14 +428,14 @@ THREE.TrackballControls = function ( object, domElement ) {
 		var value = this.screen.height
 		console.log(value);
 		if ( _state === STATE.ROTATE && !_this.noRotate ) {
-			_this.getMouseProjectionOnBall( _XValue++, 667 /2 , _rotateStart );
+			_this.getMouseProjectionOnBall( _XValue++, value /2 , _rotateStart );
 			_rotateEnd.copy(_rotateStart)
 		}
 
 		if ( _state === STATE.ROTATE && !_this.noRotate ) {
 			setInterval(function(){
 				_XValue += 4
-				_this.getMouseProjectionOnBall( (_XValue), 667 /2 , _rotateEnd );
+				_this.getMouseProjectionOnBall( (_XValue), value /2 , _rotateEnd );
 			}, 100);
 		}
 	}
