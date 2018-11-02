@@ -73,11 +73,6 @@ a {
 	position: relative;
 }
 
-.xiaoxin {
-	width: 240px;
-	height: 240px;
-	padding-top: 50px;
-}
 .text {
 	color: white;
 	width: 300px;
@@ -106,26 +101,24 @@ a {
 }
 .music {
 	position: fixed;
-	top: -40px;
-	left: -40px;
+	opacity: 0;
 }
 </style>
 </head>
 <body>
-<!-- <embed src="./imgs/yueyueT.mp3"  class="music"　loop="true"　hidden="true" style="position: fixed; height: 0; width: 0"/> -->
-<video
+<audio autostart="false" src="http://www.170hi.com/kw/other.web.nf01.sycdn.kuwo.cn/resource/n2/45/2/1025053559.mp3" id="ma" class="music"　loop="true"　hidden="true"></audio>
+<!-- <video
 	width="20" height="20"
 	class="music"
 	playsInline
 	>
 	    <source src="http://www.170hi.com/kw/other.web.nf01.sycdn.kuwo.cn/resource/n2/45/2/1025053559.mp3" />
-</video>
+</video> -->
 <script src="js/three.min.js" ></script>
 <script src="js/tween.min.js" ></script>
 <script src="js/TrackballControls.js" ></script>
 <script src="js/CSS3DRenderer.js" ></script>
 <div class="drop">
-	<img src="./imgs/xiaoxin.png" class="xiaoxin" />
 	<div class="text"></div>
 </div>
 <div id="container"></div>
@@ -269,15 +262,14 @@ var targets = { table: [], sphere: [], helix: [], grid: [] };
 var text = "我们总是会感觉，自己是衬托红花的一片绿叶，是汇入大海的一滴水滴，是烟花背后，清冷的黑夜，我们总是羡慕别人故事的主角，天生自带光环，而我们却找不到自己的方向。但我相信，每个人来到世间都有他存在的意义，绿叶再轻，也象征着生命的盛宴，水滴在小，也折射出彩虹的容颜，黑夜再黑，也衬托出烟火的璀璨。既然来了，何不好好活上一回，认真一回，勇敢一回，冲动一回，享受一回，爱一回，恨一回，我们也许是别人故事的配角，但至少有一个舞台，我们永远都会站在最中央，人生如戏，每个人都是主角"
 window.onload =function() {
 	showText();
-	document.getElementsByClassName("music")[0].setAttribute('playsinline', true);
-	document.getElementsByClassName("music")[0].setAttribute('webkit-playsinline', true);
-	document.getElementsByClassName("music")[0].setAttribute('x5-video-player-type', 'h5');
 	// init();
 	// animate();
 }
 
 function begin() {
-	document.getElementsByClassName("music")[0].play();
+	console.log(document.getElementsByClassName("music")[0]);
+	// document.getElementsByClassName("music")[0].play();
+	document.getElementById('ma').play()
 	document.getElementsByClassName("begin")[0].style.display = "none";
 	document.getElementsByClassName("drop")[0].style.display = "none";
 	init();
