@@ -265,13 +265,13 @@ window.onload =function() {
 	if (navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Mac') > -1) {
 		document.getElementById('ma').setAttribute('src', 'http://www.170hi.com/kw/other.web.nf01.sycdn.kuwo.cn/resource/n2/45/2/1025053559.mp3')
 	}
+	document.getElementById('ma').play()
 	// init();
 	// animate();
 }
 
 function begin() {
-	// document.getElementsByClassName("music")[0].play();
-	document.getElementById('ma').play()
+	document.getElementsByClassName("music")[0].play();
 	document.getElementsByClassName("begin")[0].style.display = "none";
 	document.getElementsByClassName("drop")[0].style.display = "none";
 	init();
