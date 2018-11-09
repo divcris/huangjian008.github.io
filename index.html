@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<title>生日快乐</title>
+<title>吧唧吧唧嘴</title>
 <style>
 html, body {
 	height: 100%;
@@ -104,20 +103,10 @@ a {
 	position: fixed;
 	opacity: 0;
 }
-
-.cake {
-	width: 516px;
-	height: 390px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -195px;
-	margin-left: -258px;
-}
 </style>
 </head>
 <body>
-<audio autoplay  autostart="false" src="https://huangjian008.github.io/imgs/yueyueT.mp3" id="ma" class="music"　loop="true"　hidden="true"></audio>
+<audio  autostart="false" src="https://huangjian008.github.io/imgs/yueyueT.mp3" id="ma" class="music"　loop="true"　hidden="true"></audio>
 <!-- <video
 	width="20" height="20"
 	class="music"
@@ -130,17 +119,17 @@ a {
 <script src="js/TrackballControls.js" ></script>
 <script src="js/CSS3DRenderer.js" ></script>
 <div class="drop">
-	<img src="./imgs//birthday.png" class="cake"/>
+	<div class="text"></div>
 </div>
 <div id="container"></div>
-<div id="info">生日快乐！</div>
+<div id="info">最好的不是相遇，而是重逢！感谢神武</div>
 <div id="menu">
 <button id="table"></button>
 <button id="sphere"></button>
 <button id="helix"></button>
 <button id="grid"></button>
 </div>
-<div class="begin" onclick="begin()">开启属于你的世界</div>
+<div class="begin" onclick="begin()">8倍镜确认</div>
 <script>
 
 var table = [
@@ -289,19 +278,18 @@ function begin() {
 }
 
 function showText() {
-	// var content = document.getElementsByClassName("text")[0];
-	// var i = 0;
-	// var timer = setInterval(function(){
-	// 	if (i >= text.length) {
-	// 		clearInterval(timer);
-	// 		return;
-	// 	}
-	// 	content.innerHTML = content.innerHTML + text[i++];
-	// }, 100)
+	var content = document.getElementsByClassName("text")[0];
+	var i = 0;
+	var timer = setInterval(function(){
+		if (i >= text.length) {
+			clearInterval(timer);
+			return;
+		}
+		content.innerHTML = content.innerHTML + text[i++];
+	}, 100)
 }
 
 function init() {
-	document.getElementsByClassName("music")[0].play();
 
 	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 3000;
@@ -317,7 +305,7 @@ function init() {
 		// element.style.backgroundColor = "rgba(0,127,127," + ( Math.random() * 0.5 + 0.25 ) + ")";
 		var img = document.createElement( "img" );
 		img.className = "img";
-		img.src = "./imgs/" + ( i/5 + 1 )  + ".jpg";
+		img.src = "./imgs/first.png";
 		element.appendChild( img );
 
 		var object = new THREE.CSS3DObject( element );
@@ -422,15 +410,15 @@ function init() {
 	// }, false );
 	setTimeout(function(){
 		transform( targets.sphere, 1000 );
-	}, 5000);
+	}, 2000);
 
 	setTimeout(function(){
 		transform( targets.helix, 1000 );
-	}, 12000);
+	}, 5500);
 
 	setTimeout(function(){
 		transform( targets.grid, 1000 );
-	}, 17000);
+	}, 9500);
 
 	var button = document.getElementById( "sphere" );
 	button.addEventListener( "click", function ( event ) {
