@@ -1,509 +1,674 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<title>吧唧吧唧嘴</title>
+<title>HTML5 Canvas超炫酷3D烟花动画 - 代码库</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <style>
-html, body {
+html,body{margin:0px;height:100%;background:#000;}
+.container {
+	overflow: hidden;
+}
+.test {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+	white-space: nowrap;
+}
+#canvas{width:100%;height:100%;}
+.drop {
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	padding: 0 60px;
+}
+.text {
+	color: #DDF3FF;
+	font-size: 18px;
+}
+.tip-contaienr {
+	position: absolute;
+	right: 40px;
+	bottom: 40px;
+	display: none;
+}
+.tip {
+	/* display: none; */
+	width: 60px;
+	height: 60px;
+	animation-name: shake;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-delay: 0;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+    -webkit-animation-name: shake;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-delay: 0;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-play-state: running;
+	z-index: 100000;
+}
+@keyframes shake {
+	0% {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+	}
+	40% {
+		-webkit-transform: scaleX(1);
+		transform: scaleX(1);
+	}
+	50% {
+		-webkit-transform: rotate(-13deg);
+		transform: rotate(-13deg);
+	}
+	60% {
+		-webkit-transform: rotate(13deg);
+		transform: rotate(13deg);
+	}
+	70% {
+		-webkit-transform: rotate(-13deg);
+		transform: rotate(-13deg);
+	}
+	80% {
+		-webkit-transform: scaleX(1);
+		transform: scaleX(1);
+	}
+	100% {
+		-webkit-transform: scaleX(1);
+		transform: scaleX(1);
+	}
+}
+@-webkit-keyframes shake {
+	0% {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+	}
+	40% {
+		-webkit-transform: scaleX(1);
+		transform: scaleX(1);
+	}
+	50% {
+		-webkit-transform: rotate(-13deg);
+		transform: rotate(-13deg);
+	}
+	60% {
+		-webkit-transform: rotate(13deg);
+		transform: rotate(13deg);
+	}
+	70% {
+		-webkit-transform: rotate(-13deg);
+		transform: rotate(-13deg);
+	}
+	80% {
+		-webkit-transform: scaleX(1);
+		transform: scaleX(1);
+	}
+	100% {
+		-webkit-transform: scaleX(1);
+		transform: scaleX(1);
+	}
+}
+.click-me {
+	color: white;
+	text-align: center;
+	margin-top: 0;
+}
+.first-page {
+	width: 100%;
 	height: 100%;
+	display: inline-block;
+	position: relative;
+	white-space: normal;
 }
 
-body {
-	background-color: #000000;
+.img-container {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	padding: 0;
 	margin: 0;
-	font-family: Helvetica, sans-serif;;
+	vertical-align: top;
 	overflow: hidden;
 }
 
-a {
-	color: #ffffff;
-}
-
-#info {
-	position: absolute;
-	width: 100%;
-	color: #ffffff;
-	padding: 5px;
-	font-family: Monospace;
-	font-size: 13px;
-	font-weight: bold;
-	text-align: center;
-	z-index: 1;
-}
-
-#menu {
-	position: absolute;
-	bottom: 20px;
-	width: 100%;
-	text-align: center;
-	font-family: verdana,Tahoma,Arial,Hei,"Microsoft Yahei",SimHei;
-}
-
-.element {
-	width: 120px;
-	height: 160px;
-	text-align: center;
-	cursor: default;
-}
-
-.img {
-	width: 120px;
-	height: 160px;
-}
-
-.element:hover {
-	box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
-	border: 1px solid rgba(127,255,255,0.75);
-}
-
-
- button {
-	background: transparent;
-	border: 0px;
+.ul-1 {
+	list-style: none;
+	display: block;
+	height: 100%;
 	padding: 0;
-	cursor: pointer;
+	margin: 0;
+	animation-duration: 500ms;
+	-webkit-animation-duration: 500ms;
+	position: relative;
 }
-.drop {
+.item {
+	display: inline-block;
 	width: 100%;
 	height: 100%;
-	background: rgba(0,0,0,0.8);
-	display: block;
-	text-align: center;
+	color: white;
 	position: relative;
 }
 
-.text {
-	color: white;
-	width: 300px;
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%);
-	margin-top: 30px;
-	text-align: left;
+.base {
+	filter: blur(3px);
+	width: 100%;
+	height: 100%;
 }
 
-.begin {
-	width: 160px;
-	height: 40px;
-	color: #ffffff;
+.base-child {
+	width: 45%;
+	height: 45%;
+	border: 4px solid white;
+	position: absolute;
+	right: 60px;
+	bottom: 60px
+}
+
+.first {
+	background: url('./imgs/first.png');
+	background-position: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.first-boy {
+	background: url('./imgs/first.png');
+	background-position: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.second {
+	background: url('./imgs/second.png');
+	background-position: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.second-boy {
+	background: url('./imgs/second.png');
+	background-position: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.third {
+	background: url('./imgs/third.png');
+	background-position: 35% 70%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.third-boy {
+	background: url('./imgs/third.png');
+	background-position: 36%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.fouth {
+	background: url('./imgs/four.png');
+	background-position: 20%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.fouth-boy {
+	background: url('./imgs/four.png');
+	background-position: 20%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.five {
+	background: url('./imgs/five.png');
+	background-position: 20%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.txt {
+	color: #FF2400;
 	font-size: 18px;
-	background: -webkit-linear-gradient(45deg, #2b3ad9, #b726ff);
-    background: -o-linear-gradient(45deg, #2b3ad9, #b726ff);
-    background: linear-gradient(45deg, #2b3ad9, #b726ff);
-	position: fixed;
-	left: 50%;
-	transform: translate(-50%);
-	bottom: 15px;
-	text-align: center;
-	line-height: 40px;
-	cursor: pointer;
+	position: absolute;
+	top: 60px;
+	left: 0;
+	width: 100%;
+	padding: 60px;
+	max-width: 70%;
+    white-space: normal;
 }
-.music {
-	position: fixed;
-	opacity: 0;
+
+.sp {
+	filter: blur(0);
 }
+
 </style>
+<script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
 </head>
 <body>
-<audio  autostart="false" src="https://huangjian008.github.io/imgs/yueyueT.mp3" id="ma" class="music"　loop="true"　hidden="true"></audio>
-<!-- <video
-	width="20" height="20"
-	class="music"
-	playsInline
-	>
-	    <source src="http://www.170hi.com/kw/other.web.nf01.sycdn.kuwo.cn/resource/n2/45/2/1025053559.mp3" />
-</video> -->
-<script src="js/three.min.js" ></script>
-<script src="js/tween.min.js" ></script>
-<script src="js/TrackballControls.js" ></script>
-<script src="js/CSS3DRenderer.js" ></script>
-<div class="drop">
-	<div class="text"></div>
+<div class="container">
+	<div class="test">
+		<div class='first-page'>
+				<canvas id="canvas"></canvas>
+				<div class="drop">
+					<div class="text"></div>
+				</div>
+				<div class="tip-contaienr">
+					<img src='./imgs/tip.png' class='tip'/>
+					<p class="click-me">点我</p>
+				</div>
+			</div>
+			<div class='img-container'>
+				<ul class='ul-1'>
+					<li class='item'>
+						<div class='second base'>
+						</div>
+						<div class="txt"></div>
+						<div class='second-boy base-child'></div>
+					</li>
+					<li class='item'>
+						<div class='first base'>
+						</div>
+						<div class="txt"></div>
+						<div class='first-boy base-child'></div>
+					</li>
+					<li class='item'>
+						<div class='third base'>
+						</div>
+						<div class="txt"></div>
+						<div class='third-boy base-child'></div></li>
+					<li class='item'>
+						<div class='fouth base'>
+						</div>
+						<div class="txt"></div>
+						<div class='fouth-boy base-child'></div>
+					</li>
+					<li class='item'>
+						<div class='five base sp'>
+						</div>
+						<div class="txt"></div>
+						<!-- <div class='fouth-boy base-child'></div> -->
+					</li>
+				</ul>
+			</div>
+	</div>
 </div>
-<div id="container"></div>
-<div id="info">最好的不是相遇，而是重逢！感谢神武</div>
-<div id="menu">
-<button id="table"></button>
-<button id="sphere"></button>
-<button id="helix"></button>
-<button id="grid"></button>
-</div>
-<div class="begin" onclick="begin()">8倍镜确认</div>
 <script>
+var flag = false;
+var sf = new Snowflakes({
+	color: "#ffffff",
+	count: 75,
+	minOpacity: 0.2,
+	maxOpacity: 0.6
+});	
+function clickT() {
+	document.getElementsByClassName('test')[0].style.transform ='translateX('+'-'+(Number(window.screen.width)+4)+'px)';
+	document.getElementsByClassName('test')[0].style.webkitTransform ='translateX('+'-'+(Number(window.screen.width)+4)+'px)';
+	document.getElementsByClassName('test')[0].style.MozTransform ='translateX('+'-'+(Number(window.screen.width)+4)+'px)';
+	document.getElementsByClassName('test')[0].style.msTransform ='translateX('+'-'+(Number(window.screen.width)+4)+'px)';
+	document.getElementsByClassName('test')[0].style.OTransform ='translateX('+'-'+(Number(window.screen.width)+4)+'px)';
 
-var table = [
-	"H", "Hydrogen", "1.00794", 1, 1,
-	"He", "Helium", "4.002602", 18, 1,
-	"Li", "Lithium", "#6.941", 1, 2,
-	"Be", "Beryllium", "9.012182", 2, 2,
-	"B", "Boron", "#10.811", 13, 2,
-	"C", "Carbon", "#12.0107", 14, 2,
-	"N", "Nitrogen", "#14.0067", 15, 2,
-	"O", "Oxygen", "#15.9994", 16, 2,
-	"F", "Fluorine", "18.9984032", 17, 2,
-	"Ne", "Neon", "#20.1797", 18, 2,
-	"Na", "Sodium", "22.98976...", 1, 3,
-	"Mg", "Magnesium", "#24.305", 2, 3,
-	"Al", "Aluminium", "26.9815386", 13, 3,
-	"Si", "Silicon", "#28.0855", 14, 3,
-	"P", "Phosphorus", "30.973762", 15, 3,
-	"S", "Sulfur", "#32.065", 16, 3,
-	"Cl", "Chlorine", "#35.453", 17, 3,
-	"Ar", "Argon", "#39.948", 18, 3,
-	"K", "Potassium", "#39.948", 1, 4,
-	"Ca", "Calcium", "#40.078", 2, 4,
-	"Sc", "Scandium", "44.955912", 3, 4,
-	"Ti", "Titanium", "#47.867", 4, 4,
-	"V", "Vanadium", "#50.9415", 5, 4,
-	"Cr", "Chromium", "#51.9961", 6, 4,
-	"Mn", "Manganese", "54.938045", 7, 4,
-	"Fe", "Iron", "#55.845", 8, 4,
-	"Co", "Cobalt", "58.933195", 9, 4,
-	"Ni", "Nickel", "#58.6934", 10, 4,
-	"Cu", "Copper", "#63.546", 11, 4,
-	"Zn", "Zinc", "#65.38", 12, 4,
-	"Ga", "Gallium", "#69.723", 13, 4,
-	"Ge", "Germanium", "#72.63", 14, 4,
-	"As", "Arsenic", "#74.9216", 15, 4,
-	"Se", "Selenium", "#78.96", 16, 4,
-	"Br", "Bromine", "#79.904", 17, 4,
-	"Kr", "Krypton", "#83.798", 18, 4,
-	"Rb", "Rubidium", "#85.4678", 1, 5,
-	"Sr", "Strontium", "#87.62", 2, 5,
-	"Y", "Yttrium", "88.90585", 3, 5,
-	"Zr", "Zirconium", "#91.224", 4, 5,
-	"Nb", "Niobium", "92.90628", 5, 5,
-	"Mo", "Molybdenum", "#95.96", 6, 5,
-	"Tc", "Technetium", "(98)", 7, 5,
-	"Ru", "Ruthenium", "#101.07", 8, 5,
-	"Rh", "Rhodium", "#102.9055", 9, 5,
-	"Pd", "Palladium", "#106.42", 10, 5,
-	"Ag", "Silver", "#107.8682", 11, 5,
-	"Cd", "Cadmium", "#112.411", 12, 5,
-	"In", "Indium", "#114.818", 13, 5,
-	"Sn", "Tin", "#118.71", 14, 5,
-	"Sb", "Antimony", "#121.76", 15, 5,
-	"Te", "Tellurium", "127.6", 16, 5,
-	"I", "Iodine", "126.90447", 17, 5,
-	"Xe", "Xenon", "#131.293", 18, 5,
-	"Cs", "Caesium", "#132.9054", 1, 6,
-	"Ba", "Barium", "#132.9054", 2, 6,
-	"La", "Lanthanum", "138.90547", 4, 9,
-	"Ce", "Cerium", "#140.116", 5, 9,
-	"Pr", "Praseodymium", "140.90765", 6, 9,
-	"Nd", "Neodymium", "#144.242", 7, 9,
-	"Pm", "Promethium", "(145)", 8, 9,
-	"Sm", "Samarium", "#150.36", 9, 9,
-	"Eu", "Europium", "#151.964", 10, 9,
-	"Gd", "Gadolinium", "#157.25", 11, 9,
-	"Tb", "Terbium", "158.92535", 12, 9,
-	"Dy", "Dysprosium", "162.5", 13, 9,
-	"Ho", "Holmium", "164.93032", 14, 9,
-	"Er", "Erbium", "#167.259", 15, 9,
-	"Tm", "Thulium", "168.93421", 16, 9,
-	"Yb", "Ytterbium", "#173.054", 17, 9,
-	"Lu", "Lutetium", "#174.9668", 18, 9,
-	"Hf", "Hafnium", "#178.49", 4, 6,
-	"Ta", "Tantalum", "180.94788", 5, 6,
-	"W", "Tungsten", "#183.84", 6, 6,
-	"Re", "Rhenium", "#186.207", 7, 6,
-	"Os", "Osmium", "#190.23", 8, 6,
-	"Ir", "Iridium", "#192.217", 9, 6,
-	"Pt", "Platinum", "#195.084", 10, 6,
-	"Au", "Gold", "196.966569", 11, 6,
-	"Hg", "Mercury", "#200.59", 12, 6,
-	"Tl", "Thallium", "#204.3833", 13, 6,
-	"Pb", "Lead", "207.2", 14, 6,
-	"Bi", "Bismuth", "#208.9804", 15, 6,
-	"Po", "Polonium", "(209)", 16, 6,
-	"At", "Astatine", "(210)", 17, 6,
-	"Rn", "Radon", "(222)", 18, 6,
-	"Fr", "Francium", "(223)", 1, 7,
-	"Ra", "Radium", "(226)", 2, 7,
-	"Ac", "Actinium", "(227)", 4, 10,
-	"Th", "Thorium", "232.03806", 5, 10,
-	"Pa", "Protactinium", "#231.0588", 6, 10,
-	"U", "Uranium", "238.02891", 7, 10,
-	"Np", "Neptunium", "(237)", 8, 10,
-	"Pu", "Plutonium", "(244)", 9, 10,
-	"Am", "Americium", "(243)", 10, 10,
-	"Cm", "Curium", "(247)", 11, 10,
-	"Bk", "Berkelium", "(247)", 12, 10,
-	"Cf", "Californium", "(251)", 13, 10,
-	"Es", "Einstenium", "(252)", 14, 10,
-	"Fm", "Fermium", "(257)", 15, 10,
-	"Md", "Mendelevium", "(258)", 16, 10,
-	"No", "Nobelium", "(259)", 17, 10,
-	"Lr", "Lawrencium", "(262)", 18, 10,
-	"Rf", "Rutherfordium", "(267)", 4, 7,
-	"Db", "Dubnium", "(268)", 5, 7,
-	"Sg", "Seaborgium", "(271)", 6, 7,
-	"Bh", "Bohrium", "(272)", 7, 7,
-	"Hs", "Hassium", "(270)", 8, 7,
-	"Mt", "Meitnerium", "(276)", 9, 7,
-	"Ds", "Darmstadium", "(281)", 10, 7,
-	"Rg", "Roentgenium", "(280)", 11, 7,
-	"Cn", "Copernicium", "(285)", 12, 7,
-	"Uut", "Unutrium", "(284)", 13, 7,
-	"Fl", "Flerovium", "(289)", 14, 7,
-	"Uup", "Ununpentium", "(288)", 15, 7,
-	"Lv", "Livermorium", "(293)", 16, 7,
-	"Uus", "Ununseptium", "(294)", 17, 7,
-	"Uuo", "Ununoctium", "(294)", 18, 7
-];
-
-var camera, scene, renderer;
-var controls;
-
-var objects = [];
-var times;
-var targets = { table: [], sphere: [], helix: [], grid: [] };
-var text = "我们总是会感觉，自己是衬托红花的一片绿叶，是汇入大海的一滴水滴，是烟花背后，清冷的黑夜，我们总是羡慕别人故事的主角，天生自带光环，而我们却找不到自己的方向。但我相信，每个人来到世间都有他存在的意义，绿叶再轻，也象征着生命的盛宴，水滴在小，也折射出彩虹的容颜，黑夜再黑，也衬托出烟火的璀璨。既然来了，何不好好活上一回，认真一回，勇敢一回，冲动一回，享受一回，爱一回，恨一回，我们也许是别人故事的配角，但至少有一个舞台，我们永远都会站在最中央，人生如戏，每个人都是主角"
-window.onload =function() {
-	showText();
-	if (navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Mac') > -1) {
-		document.getElementById('ma').setAttribute('src', 'http://www.170hi.com/kw/other.web.nf01.sycdn.kuwo.cn/resource/n2/45/2/1025053559.mp3')
-	}
-	// init();
-	// animate();
-}
-
-function begin() {
-	document.getElementsByClassName("music")[0].play();
-	document.getElementsByClassName("begin")[0].style.display = "none";
-	document.getElementsByClassName("drop")[0].style.display = "none";
-	init();
-	animate();
-}
-
-function showText() {
-	var content = document.getElementsByClassName("text")[0];
-	var i = 0;
-	var timer = setInterval(function(){
-		if (i >= text.length) {
-			clearInterval(timer);
+	var index = 1;
+	var times1;
+	var txt = ['你的笑，是带治疗属性的~', '仿佛春风拂过卢沟桥，秋雨浸润九寨沟~', '笑起来，真的很美，所以，一直笑吧~', '让孩子们感受到你的温暖,感受到世界的美好~','2018年即将过去,让这个苹果带走我们18年的辛酸,还回19年的美好。18年的3个目标一个都没达成，哈哈哈哈哈哈！所以希望19年的我们,都能收获我们想要的！比起昨天,能健康一点点，开心一点点，幸福一点点！']
+	var self = this;
+	animate(txt[index-1], index-1)
+	times1 = setInterval(function(){
+		if (index > 4) {
+			clearInterval(times1);
 			return;
 		}
-		content.innerHTML = content.innerHTML + text[i++];
-	}, 100)
+		console.log(123);
+		if (flag) {
+			flag = false;
+			// document.getElementsByClassName('ul-1')[0].style.transform ='translateX('+'-'+(Number(window.screen.width) * index - 4)+'px)';
+			// document.getElementsByClassName('ul-1')[0].style.webkitTransform ='translateX('+'-'+(Number(window.screen.width) * index - 4)+'px)';
+			// document.getElementsByClassName('ul-1')[0].style.MozTransform ='translateX('+'-'+(Number(window.screen.width) * index - 4) +'px)';
+			// document.getElementsByClassName('ul-1')[0].style.msTransform ='translateX('+'-'+(Number(window.screen.width) * index - 4)+'px)';
+			// document.getElementsByClassName('ul-1')[0].style.OTransform ='translateX('+'-'+(Number(window.screen.width) * index - 4)+'px)';
+			document.getElementsByClassName('ul-1')[0].style.left =-(Number(window.screen.width) * index + 6* index)+'px';
+			animate(txt[index], index);
+			index++ ;
+		}
+	}, 1000);
 }
 
-function init() {
+function animate(txt, hj) {
+	var index = 0;
+	var tempTimes = setInterval(function(){
+		console.log(hj)
+		if (index >= txt.length) {
+			if (hj == 0) {
+				document.getElementsByClassName('ul-1')[0].style.left =0+'px';
+			}
+			clearInterval(tempTimes);
+			flag = true;
+			return;
+		}
+		document.getElementsByClassName('txt')[hj].innerHTML = document.getElementsByClassName('txt')[hj].innerHTML + txt[index++];
+	}, 200)
+}
 
-	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.z = 3000;
+function initVars(){
 
-	scene = new THREE.Scene();
-
-	// table
-
-	for ( var i = 0; i < table.length; i += 5 ) {
-
-		var element = document.createElement( "div" );
-		element.className = "element";
-		// element.style.backgroundColor = "rgba(0,127,127," + ( Math.random() * 0.5 + 0.25 ) + ")";
-		var img = document.createElement( "img" );
-		img.className = "img";
-		img.src = "./imgs/first.png";
-		element.appendChild( img );
-
-		var object = new THREE.CSS3DObject( element );
-		object.position.x = Math.random() * 4000 - 2000;
-		object.position.y = Math.random() * 4000 - 2000;
-		object.position.z = Math.random() * 4000 - 2000;
-		scene.add( object );
-
-		objects.push( object );
-
-		//
-
-		var object = new THREE.Object3D();
-		object.position.x = ( table[ i + 3 ] * 140 ) - 1330;
-		object.position.y = - ( table[ i + 4 ] * 180 ) + 990;
-
-		targets.table.push( object );
-
+	pi=Math.PI;
+	ctx=canvas.getContext("2d");
+	canvas.width=canvas.clientWidth;
+	canvas.height=canvas.clientHeight;
+	cx=canvas.width/2;
+	cy=canvas.height/2;
+	playerZ=-25;
+	playerX=playerY=playerVX=playerVY=playerVZ=pitch=yaw=pitchV=yawV=0;
+	scale=600;
+	seedTimer=0;seedInterval=5,seedLife=100;gravity=.02;
+	seeds=new Array();
+	sparkPics=new Array();
+	s="https://cantelope.org/NYE/";
+	for(i=1;i<=10;++i){
+		sparkPic=new Image();
+		sparkPic.src=s+"spark"+i+".png";
+		sparkPics.push(sparkPic);
 	}
+	sparks=new Array();
+	pow1=new Audio(s+"pow1.ogg");
+	pow2=new Audio(s+"pow2.ogg");
+	pow3=new Audio(s+"pow3.ogg");
+	pow4=new Audio(s+"pow4.ogg");
+	frames = 0;
+}
 
-	// sphere
+function rasterizePoint(x,y,z){
 
-	var vector = new THREE.Vector3();
-
-	for ( var i = 0, l = objects.length; i < l; i ++ ) {
-
-		var phi = Math.acos( -1 + ( 2 * i ) / l );
-		var theta = Math.sqrt( l * Math.PI ) * phi;
-
-		var object = new THREE.Object3D();
-
-		object.position.x = 800 * Math.cos( theta ) * Math.sin( phi );
-		object.position.y = 800 * Math.sin( theta ) * Math.sin( phi );
-		object.position.z = 800 * Math.cos( phi );
-
-		vector.copy( object.position ).multiplyScalar( 2 );
-
-		object.lookAt( vector );
-
-		targets.sphere.push( object );
-
+	var p,d;
+	x-=playerX;
+	y-=playerY;
+	z-=playerZ;
+	p=Math.atan2(x,z);
+	d=Math.sqrt(x*x+z*z);
+	x=Math.sin(p-yaw)*d;
+	z=Math.cos(p-yaw)*d;
+	p=Math.atan2(y,z);
+	d=Math.sqrt(y*y+z*z);
+	y=Math.sin(p-pitch)*d;
+	z=Math.cos(p-pitch)*d;
+	var rx1=-1000,ry1=1,rx2=1000,ry2=1,rx3=0,ry3=0,rx4=x,ry4=z,uc=(ry4-ry3)*(rx2-rx1)-(rx4-rx3)*(ry2-ry1);
+	if(!uc) return {x:0,y:0,d:-1};
+	var ua=((rx4-rx3)*(ry1-ry3)-(ry4-ry3)*(rx1-rx3))/uc;
+	var ub=((rx2-rx1)*(ry1-ry3)-(ry2-ry1)*(rx1-rx3))/uc;
+	if(!z)z=.000000001;
+	if(ua>0&&ua<1&&ub>0&&ub<1){
+		return {
+			x:cx+(rx1+ua*(rx2-rx1))*scale,
+			y:cy+y/z*scale,
+			d:Math.sqrt(x*x+y*y+z*z)
+		};
+	}else{
+		return {
+			x:cx+(rx1+ua*(rx2-rx1))*scale,
+			y:cy+y/z*scale,
+			d:-1
+		};
 	}
+}
 
-	// helix
+function spawnSeed(){
+	
+	seed=new Object();
+	seed.x=-50+Math.random()*100;
+	seed.y=25;
+	seed.z=-50+Math.random()*100;
+	seed.vx=.1-Math.random()*.2;
+	seed.vy=-1.5;//*(1+Math.random()/2);
+	seed.vz=.1-Math.random()*.2;
+	seed.born=frames;
+	seeds.push(seed);
+}
 
-	var vector = new THREE.Vector3();
-
-	for ( var i = 0, l = objects.length; i < l; i ++ ) {
-
-		var phi = i * 0.175 + Math.PI;
-
-		var object = new THREE.Object3D();
-
-		object.position.x = 900 * Math.sin( phi );
-		object.position.y = - ( i * 8 ) + 450;
-		object.position.z = 900 * Math.cos( phi );
-
-		vector.x = object.position.x * 2;
-		vector.y = object.position.y;
-		vector.z = object.position.z * 2;
-
-		object.lookAt( vector );
-
-		targets.helix.push( object );
-
+function splode(x,y,z){
+	
+	t=5+parseInt(Math.random()*150);
+	sparkV=1+Math.random()*2.5;
+	type=parseInt(Math.random()*3);
+	switch(type){
+		case 0:
+			pic1=parseInt(Math.random()*10);
+			break;
+		case 1:
+			pic1=parseInt(Math.random()*10);
+			do{ pic2=parseInt(Math.random()*10); }while(pic2==pic1);
+			break;
+		case 2:
+			pic1=parseInt(Math.random()*10);
+			do{ pic2=parseInt(Math.random()*10); }while(pic2==pic1);
+			do{ pic3=parseInt(Math.random()*10); }while(pic3==pic1 || pic3==pic2);
+			break;
 	}
-
-	// grid
-
-	for ( var i = 0; i < objects.length; i ++ ) {
-
-		var object = new THREE.Object3D();
-
-		object.position.x = ( ( i % 5 ) * 400 ) - 800;
-		object.position.y = ( - ( Math.floor( i / 5 ) % 5 ) * 400 ) + 800;
-		object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
-
-		targets.grid.push( object );
-
+	for(m=1;m<t;++m){
+		spark=new Object();
+		spark.x=x; spark.y=y; spark.z=z;
+		p1=pi*2*Math.random();
+		p2=pi*Math.random();
+		v=sparkV*(1+Math.random()/6)
+		spark.vx=Math.sin(p1)*Math.sin(p2)*v;
+		spark.vz=Math.cos(p1)*Math.sin(p2)*v;
+		spark.vy=Math.cos(p2)*v;
+		switch(type){
+			case 0: spark.img=sparkPics[pic1]; break;
+			case 1:
+				spark.img=sparkPics[parseInt(Math.random()*2)?pic1:pic2];
+				break;
+			case 2:
+				switch(parseInt(Math.random()*3)){
+					case 0: spark.img=sparkPics[pic1]; break;
+					case 1: spark.img=sparkPics[pic2]; break;
+					case 2: spark.img=sparkPics[pic3]; break;
+				}
+				break;
+		}
+		spark.radius=25+Math.random()*50;
+		spark.alpha=1;
+		spark.trail=new Array();
+		sparks.push(spark);
 	}
-
-	//
-
-	renderer = new THREE.CSS3DRenderer();
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.domElement.style.position = "absolute";
-	document.getElementById( "container" ).appendChild( renderer.domElement );
-
-	//
-
-	controls = new THREE.TrackballControls( camera, renderer.domElement );
-	controls.rotateSpeed = 0.5;
-	controls.minDistance = 500;
-	controls.maxDistance = 6000;
-	controls.addEventListener( "change", render );
-
-	var button = document.getElementById( "table" );
-	// button.addEventListener( "click", function ( event ) {
-
-	// 	transform( targets.table, 2000 );
-
-	// }, false );
-	setTimeout(function(){
-		transform( targets.sphere, 1000 );
-	}, 2000);
-
-	setTimeout(function(){
-		transform( targets.helix, 1000 );
-	}, 5500);
-
-	setTimeout(function(){
-		transform( targets.grid, 1000 );
-	}, 9500);
-
-	var button = document.getElementById( "sphere" );
-	button.addEventListener( "click", function ( event ) {
-
-		transform( targets.sphere, 2000 );
-
-	}, false );
-
-	var button = document.getElementById( "helix" );
-	button.addEventListener( "click", function ( event ) {
-
-		transform( targets.helix, 2000 );
-
-	}, false );
-
-	var button = document.getElementById( "grid" );
-	button.addEventListener( "click", function ( event ) {
-
-		transform( targets.grid, 2000 );
-
-	}, false );
-
-	transform( targets.table, 5000 );
-
-	//
-
-	window.addEventListener( "resize", onWindowResize, false );
-
-}
-
-function transform( targets, duration ) {
-
-	TWEEN.removeAll();
-
-	for ( var i = 0; i < objects.length; i ++ ) {
-
-		var object = objects[ i ];
-		var target = targets[ i ];
-
-		new TWEEN.Tween( object.position )
-			.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
-			.easing( TWEEN.Easing.Exponential.InOut )
-			.start();
-
-		new TWEEN.Tween( object.rotation )
-			.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
-			.easing( TWEEN.Easing.Exponential.InOut )
-			.start();
-
+	switch(parseInt(Math.random()*4)){
+		case 0:	pow=new Audio(s+"pow1.ogg"); break;
+		case 1:	pow=new Audio(s+"pow2.ogg"); break;
+		case 2:	pow=new Audio(s+"pow3.ogg"); break;
+		case 3:	pow=new Audio(s+"pow4.ogg"); break;
 	}
-
-	new TWEEN.Tween( this )
-		.to( {}, duration * 2 )
-		.onUpdate( render )
-		.start();
-
+	d=Math.sqrt((x-playerX)*(x-playerX)+(y-playerY)*(y-playerY)+(z-playerZ)*(z-playerZ));
+	pow.volume=1.5/(1+d/10);
+	// pow.play();
 }
 
-function onWindowResize() {
-
-	camera.aspect = window.innerWidth / window.innerHeight;
-	camera.updateProjectionMatrix();
-
-	renderer.setSize( window.innerWidth, window.innerHeight );
-
-	render();
-
+function doLogic(){
+	
+	if(seedTimer<frames){
+		seedTimer=frames+seedInterval*Math.random()*10;
+		spawnSeed();
+	}
+	for(i=0;i<seeds.length;++i){
+		seeds[i].vy+=gravity;
+		seeds[i].x+=seeds[i].vx;
+		seeds[i].y+=seeds[i].vy;
+		seeds[i].z+=seeds[i].vz;
+		if(frames-seeds[i].born>seedLife){
+			splode(seeds[i].x,seeds[i].y,seeds[i].z);
+			seeds.splice(i,1);
+		}
+	}
+	for(i=0;i<sparks.length;++i){
+		if(sparks[i].alpha>0 && sparks[i].radius>5){
+			sparks[i].alpha-=.01;
+			sparks[i].radius/=1.02;
+			sparks[i].vy+=gravity;
+			point=new Object();
+			point.x=sparks[i].x;
+			point.y=sparks[i].y;
+			point.z=sparks[i].z;
+			if(sparks[i].trail.length){
+				x=sparks[i].trail[sparks[i].trail.length-1].x;
+				y=sparks[i].trail[sparks[i].trail.length-1].y;
+				z=sparks[i].trail[sparks[i].trail.length-1].z;
+				d=((point.x-x)*(point.x-x)+(point.y-y)*(point.y-y)+(point.z-z)*(point.z-z));
+				if(d>9){
+					sparks[i].trail.push(point);
+				}
+			}else{
+				sparks[i].trail.push(point);
+			}
+			if(sparks[i].trail.length>5)sparks[i].trail.splice(0,1);				
+			sparks[i].x+=sparks[i].vx;
+			sparks[i].y+=sparks[i].vy;
+			sparks[i].z+=sparks[i].vz;
+			sparks[i].vx/=1.075;
+			sparks[i].vy/=1.075;
+			sparks[i].vz/=1.075;
+		}else{
+			sparks.splice(i,1);
+		}
+	}
+	p=Math.atan2(playerX,playerZ);
+	d=Math.sqrt(playerX*playerX+playerZ*playerZ);
+	d+=Math.sin(frames/80)/1.25;
+	t=Math.sin(frames/200)/40;
+	playerX=Math.sin(p+t)*d;
+	playerZ=Math.cos(p+t)*d;
+	yaw=pi+p+t;
 }
 
-function animate() {
-
-	requestAnimationFrame( animate );
-
-	TWEEN.update();
-
-	controls.update();
-
+function rgb(col){
+	
+	var r = parseInt((.5+Math.sin(col)*.5)*16);
+	var g = parseInt((.5+Math.cos(col)*.5)*16);
+	var b = parseInt((.5-Math.sin(col)*.5)*16);
+	return "#"+r.toString(16)+g.toString(16)+b.toString(16);
 }
 
-function render() {
-
-	renderer.render( scene, camera );
-
+function draw(){
+	
+	ctx.clearRect(0,0,cx*2,cy*2);
+	
+	ctx.fillStyle="#ff8";
+	// for(i=-100;i<100;i+=3){
+	// 	for(j=-100;j<100;j+=4){
+	// 		x=i;z=j;y=25;
+	// 		point=rasterizePoint(x,y,z);
+	// 		if(point.d!=-1){
+	// 			size=250/(1+point.d);
+	// 			d = Math.sqrt(x * x + z * z);
+	// 			a = 0.75 - Math.pow(d / 100, 6) * 0.75;
+	// 			if(a>0){
+	// 				ctx.globalAlpha = a;
+	// 				ctx.fillRect(point.x-size/2,point.y-size/2,size,size);				
+	// 			}
+	// 		}
+	// 	}
+	// }
+	ctx.globalAlpha=1;
+	for(i=0;i<seeds.length;++i){
+		point=rasterizePoint(seeds[i].x,seeds[i].y,seeds[i].z);
+		if(point.d!=-1){
+			size=200/(1+point.d);
+			ctx.fillRect(point.x-size/2,point.y-size/2,size,size);
+		}
+	}
+	point1=new Object();
+	for(i=0;i<sparks.length;++i){
+		point=rasterizePoint(sparks[i].x,sparks[i].y,sparks[i].z);
+		if(point.d!=-1){
+			size=sparks[i].radius*200/(1+point.d);
+			if(sparks[i].alpha<0)sparks[i].alpha=0;
+			if(sparks[i].trail.length){
+				point1.x=point.x;
+				point1.y=point.y;
+				switch(sparks[i].img){
+					case sparkPics[0]:ctx.strokeStyle="#f84";break;
+					case sparkPics[1]:ctx.strokeStyle="#84f";break;
+					case sparkPics[2]:ctx.strokeStyle="#8ff";break;
+					case sparkPics[3]:ctx.strokeStyle="#fff";break;
+					case sparkPics[4]:ctx.strokeStyle="#4f8";break;
+					case sparkPics[5]:ctx.strokeStyle="#f44";break;
+					case sparkPics[6]:ctx.strokeStyle="#f84";break;
+					case sparkPics[7]:ctx.strokeStyle="#84f";break;
+					case sparkPics[8]:ctx.strokeStyle="#fff";break;
+					case sparkPics[9]:ctx.strokeStyle="#44f";break;
+				}
+				for(j=sparks[i].trail.length-1;j>=0;--j){
+					point2=rasterizePoint(sparks[i].trail[j].x,sparks[i].trail[j].y,sparks[i].trail[j].z);
+					if(point2.d!=-1){
+						ctx.globalAlpha=j/sparks[i].trail.length*sparks[i].alpha/2;
+						ctx.beginPath();
+						ctx.moveTo(point1.x,point1.y);
+						ctx.lineWidth=1+sparks[i].radius*10/(sparks[i].trail.length-j)/(1+point2.d);
+						ctx.lineTo(point2.x,point2.y);
+						ctx.stroke();
+						point1.x=point2.x;
+						point1.y=point2.y;
+					}
+				}
+			}
+			ctx.globalAlpha=sparks[i].alpha;
+			ctx.drawImage(sparks[i].img,point.x-size/2,point.y-size/2,size,size);
+		}
+	}
 }
+
+function frame(){
+
+	if(frames>100000){
+		seedTimer=0;
+		frames=0;
+	}
+	frames++;
+	draw();
+	doLogic();
+	requestAnimationFrame(frame);
+}
+
+// window.addEventListener("resize",()=>{
+// 	canvas.width=canvas.clientWidth;
+// 	canvas.height=canvas.clientHeight;
+// 	cx=canvas.width/2;
+// 	cy=canvas.height/2;
+// });
+document.getElementsByClassName('ul-1')[0]['style'].transitionDuration = '500ms';
+document.getElementsByClassName('ul-1')[0]['style'].webkitTransitionDuration = '500ms';
+document.getElementsByClassName('test')[0]['style'].transitionDuration = '500ms';
+document.getElementsByClassName('test')[0]['style'].webkitTransitionDuration = '500ms';
+
+initVars();
+frame();
+var text = "月月，烟花璀璨了你的笑颜，绽放了你的灿烂，仿佛回到上海的外滩，你说：愿吃鸡不胖，永远善良！你就是你，你只做自己。如果你的努力，换不来眼前的果实，那么，请不要生气，把它当成一颗种子，留在下一个花季。愿你笑容常在，平安夜快乐，永远的平安、幸福、安康!"
+
+var content = document.getElementsByClassName("text")[0];
+var index = 0;
+document.getElementsByClassName('tip')[0].addEventListener('click',self.clickT);
+
+
+
+setTimeout(function(){
+	var timer = setInterval(function(){
+	var self = this;
+	if (index >= text.length) {
+		clearInterval(timer);
+		setTimeout(function(){
+			document.getElementsByClassName('tip-contaienr')[0].style.display = 'block';
+		}, 2000);
+		return;
+	}
+	content.innerHTML = content.innerHTML + text[index++];
+	}, 200)
+}, 2000);
 
 </script>
+
 </body>
 </html>
+
