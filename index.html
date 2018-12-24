@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>HTML5 Canvas超炫酷3D烟花动画 - 代码库</title>
+<title>月月，平安夜快乐！</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <style>
 html,body{margin:0px;height:100%;background:#000;}
@@ -31,7 +31,7 @@ html,body{margin:0px;height:100%;background:#000;}
 	position: absolute;
 	right: 40px;
 	bottom: 40px;
-	display: none;
+	/* display: none; */
 }
 .tip {
 	/* display: none; */
@@ -248,10 +248,17 @@ html,body{margin:0px;height:100%;background:#000;}
 	filter: blur(0);
 }
 
+.txt-sp {
+	font-weight: bold;
+	font-size: 20px;
+}
+
 </style>
 <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
 </head>
 <body>
+<!-- <audio  autostart="false" src="https://huangjian008.github.io/imgs/123321.mp3" id="ma" class="music"　loop="true"　hidden="true"></audio> -->
+<audio  autostart="false" src="./imgs/123321.mp3" id="ma" class="music"　loop="true"　hidden="true"></audio>
 <div class="container">
 	<div class="test">
 		<div class='first-page'>
@@ -292,7 +299,7 @@ html,body{margin:0px;height:100%;background:#000;}
 					<li class='item'>
 						<div class='five base sp'>
 						</div>
-						<div class="txt"></div>
+						<div class="txt txt-sp"></div>
 						<!-- <div class='fouth-boy base-child'></div> -->
 					</li>
 				</ul>
@@ -308,6 +315,7 @@ var sf = new Snowflakes({
 	maxOpacity: 0.6
 });	
 function clickT() {
+	document.getElementById('ma').play();
 	document.getElementsByClassName('test')[0].style.transform ='translateX('+'-'+(Number(window.screen.width)+4)+'px)';
 	document.getElementsByClassName('test')[0].style.webkitTransform ='translateX('+'-'+(Number(window.screen.width)+4)+'px)';
 	document.getElementsByClassName('test')[0].style.MozTransform ='translateX('+'-'+(Number(window.screen.width)+4)+'px)';
@@ -316,7 +324,7 @@ function clickT() {
 
 	var index = 1;
 	var times1;
-	var txt = ['你的笑，是带治疗属性的~', '仿佛春风拂过卢沟桥，秋雨浸润九寨沟~', '笑起来，真的很美，所以，一直笑吧~', '让孩子们感受到你的温暖,感受到世界的美好~','2018年即将过去,让这个苹果带走我们18年的辛酸,还回19年的美好。18年的3个目标一个都没达成，哈哈哈哈哈哈！所以希望19年的我们,都能收获我们想要的！比起昨天,能健康一点点，开心一点点，幸福一点点！']
+	var txt = ['你的笑，是带治疗属性的~', '仿佛春风拂过卢沟桥，秋雨浸润九寨沟~', '笑起来，真的很美，所以，一直笑吧~', '让孩子们感受到你的温暖,感受到世界的美好~','2018年即将过去,让这个苹果带走我们18年的辛酸,还回19年的美好。18年的3个目标一个都没达成，哈哈哈哈哈哈！所以希望19年的我们,都能收获我们想要的！比起昨天,能健康一点点，开心一点点，幸福一点点！愿今天的自己早一点点下班！']
 	var self = this;
 	animate(txt[index-1], index-1)
 	times1 = setInterval(function(){
@@ -324,14 +332,8 @@ function clickT() {
 			clearInterval(times1);
 			return;
 		}
-		console.log(123);
 		if (flag) {
 			flag = false;
-			// document.getElementsByClassName('ul-1')[0].style.transform ='translateX('+'-'+(Number(window.screen.width) * index - 4)+'px)';
-			// document.getElementsByClassName('ul-1')[0].style.webkitTransform ='translateX('+'-'+(Number(window.screen.width) * index - 4)+'px)';
-			// document.getElementsByClassName('ul-1')[0].style.MozTransform ='translateX('+'-'+(Number(window.screen.width) * index - 4) +'px)';
-			// document.getElementsByClassName('ul-1')[0].style.msTransform ='translateX('+'-'+(Number(window.screen.width) * index - 4)+'px)';
-			// document.getElementsByClassName('ul-1')[0].style.OTransform ='translateX('+'-'+(Number(window.screen.width) * index - 4)+'px)';
 			document.getElementsByClassName('ul-1')[0].style.left =-(Number(window.screen.width) * index + 6* index)+'px';
 			animate(txt[index], index);
 			index++ ;
@@ -342,7 +344,6 @@ function clickT() {
 function animate(txt, hj) {
 	var index = 0;
 	var tempTimes = setInterval(function(){
-		console.log(hj)
 		if (index >= txt.length) {
 			if (hj == 0) {
 				document.getElementsByClassName('ul-1')[0].style.left =0+'px';
@@ -556,21 +557,6 @@ function draw(){
 	ctx.clearRect(0,0,cx*2,cy*2);
 	
 	ctx.fillStyle="#ff8";
-	// for(i=-100;i<100;i+=3){
-	// 	for(j=-100;j<100;j+=4){
-	// 		x=i;z=j;y=25;
-	// 		point=rasterizePoint(x,y,z);
-	// 		if(point.d!=-1){
-	// 			size=250/(1+point.d);
-	// 			d = Math.sqrt(x * x + z * z);
-	// 			a = 0.75 - Math.pow(d / 100, 6) * 0.75;
-	// 			if(a>0){
-	// 				ctx.globalAlpha = a;
-	// 				ctx.fillRect(point.x-size/2,point.y-size/2,size,size);				
-	// 			}
-	// 		}
-	// 	}
-	// }
 	ctx.globalAlpha=1;
 	for(i=0;i<seeds.length;++i){
 		point=rasterizePoint(seeds[i].x,seeds[i].y,seeds[i].z);
@@ -631,17 +617,8 @@ function frame(){
 	doLogic();
 	requestAnimationFrame(frame);
 }
-
-// window.addEventListener("resize",()=>{
-// 	canvas.width=canvas.clientWidth;
-// 	canvas.height=canvas.clientHeight;
-// 	cx=canvas.width/2;
-// 	cy=canvas.height/2;
-// });
 document.getElementsByClassName('ul-1')[0]['style'].transitionDuration = '500ms';
 document.getElementsByClassName('ul-1')[0]['style'].webkitTransitionDuration = '500ms';
-document.getElementsByClassName('test')[0]['style'].transitionDuration = '500ms';
-document.getElementsByClassName('test')[0]['style'].webkitTransitionDuration = '500ms';
 
 initVars();
 frame();
